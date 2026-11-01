@@ -3,6 +3,8 @@
 ## Team members
 
 - Add all the names of all the team members
+- Rubi Perez Guzman
+- Jin Wang
 
 ## Live Demo
 
