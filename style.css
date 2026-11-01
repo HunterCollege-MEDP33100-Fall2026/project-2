@@ -1,3 +1,47 @@
 #map {
    height: 180vh;
 }
+
+/* Main popup box */
+.station-popup {
+   width: 250px;
+   font-family: Arial, sans-serif;
+   color: #333333;
+}
+
+/* Station name */
+.station-popup .station-name {
+   font-size: 18px;
+   margin: 0 0 12px;
+   padding-bottom: 8px;
+   border-bottom: 2px solid #650d1b;
+   color: #650d1b;
+}
+
+/* Elevator information heading */
+.station-popup .elevator-title {
+   font-size: 14px;
+   font-weight: bold;
+   margin-bottom: 8px;
+}
+
+/* Individual elevator records */
+.station-popup .elevator-info {
+   background-color: #f5f0f0;
+   padding: 8px;
+   margin-bottom: 8px;
+   border-radius: 6px;
+}
+
+/* Information inside each record */
+.station-popup .elevator-info p {
+   font-size: 12px;
+   margin: 4px 0;
+   line-height: 1.4;
+}
+
+/* No elevator data message */
+.station-popup .no-data {
+   font-size: 13px;
+   color: #777777;
+}
