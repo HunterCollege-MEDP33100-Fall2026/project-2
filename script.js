@@ -15,8 +15,50 @@ function createMarker(station) {
       return;
    }
 
-   L.marker([lat, long]).addTo(map);
+   // Create the marker
+   const marker = L.marker([lat, long]).addTo(map);
+
+   // Create popup content
+   const popupContent = document.createElement("div");
+
+   // Station name
+   const stationName = document.createElement("h3");
+   stationName.textContent = station.stop_name;
+   popupContent.appendChild(stationName);
+
+   // Check if the station has elevator records
+   if (station.elevatorData.length > 0) {
+
+      const elevatorTitle = document.createElement("p");
+      elevatorTitle.textContent = "Elevator Information:";
+      popupContent.appendChild(elevatorTitle);
+
+      // Display each elevator record
+      for (const elevator of station.elevatorData) {
+
+         const elevatorInfo = document.createElement("p");
+
+         elevatorInfo.textContent =
+            "Month: " + elevator.month +
+            " | AM Availability: " + elevator.am_peak_availability +
+            " | PM Availability: " + elevator.pm_peak_availability +
+            " | Outages: " + elevator.total_outages;
+
+         popupContent.appendChild(elevatorInfo);
+      }
+
+   } else {
+
+      const noData = document.createElement("p");
+      noData.textContent = "No matching elevator records found.";
+      popupContent.appendChild(noData);
+
+   }
+
+   // Attach popup to marker
+   marker.bindPopup(popupContent);
 }
+
 
 function handleError() {
    // check if error modal already exist
