@@ -38,18 +38,40 @@ function createMarker(station) {
    const popupContent = document.createElement("div");
    popupContent.classList.add("station-popup");
 
+   // Create elevator doors
+   const elevatorDoors = document.createElement("div");
+   elevatorDoors.classList.add("elevator-doors");
+
+   // Left door
+   const leftDoor = document.createElement("div");
+   leftDoor.classList.add("left-door");
+
+   // Right door
+   const rightDoor = document.createElement("div");
+   rightDoor.classList.add("right-door");
+
+   // Add doors to elevator
+   elevatorDoors.appendChild(leftDoor);
+   elevatorDoors.appendChild(rightDoor);
+
+   // Create information container
+   const stationInfo = document.createElement("div");
+   stationInfo.classList.add("station-info");
+
+   // Add elevator doors to popup
+   popupContent.appendChild(elevatorDoors);
    // Station name
    const stationName = document.createElement("h3");
    stationName.classList.add("station-name");
    stationName.textContent = station.stop_name;
-   popupContent.appendChild(stationName);
+   stationInfo.appendChild(stationName);
 
    // Check if the station has elevator records
    if (station.elevatorData.length > 0) {
       const elevatorTitle = document.createElement("p");
       elevatorTitle.classList.add("elevator-title");
       elevatorTitle.textContent = "Elevator Information";
-      popupContent.appendChild(elevatorTitle);
+      stationInfo.appendChild(elevatorTitle);
 
       // Display each elevator record
       for (const elevator of station.elevatorData) {
@@ -70,17 +92,39 @@ function createMarker(station) {
             elevator.total_outages +
             "</p>";
 
-         popupContent.appendChild(elevatorInfo);
+         stationInfo.appendChild(elevatorInfo);
       }
    } else {
       const noData = document.createElement("p");
       noData.classList.add("no-data");
       noData.textContent = "No matching elevator records found.";
-      popupContent.appendChild(noData);
-   }
+      stationInfo.appendChild(noData);
 
+   }
+   // Add station information to popup
+   popupContent.appendChild(stationInfo);
    // Attach popup to marker
    marker.bindPopup(popupContent);
+
+   // Start animation when popup opens
+   marker.on("popupopen", function () {
+
+      // Reset doors to closed position
+      elevatorDoors.classList.remove("open");
+
+      // Wait a moment before opening the doors
+      setTimeout(function () {
+         elevatorDoors.classList.add("open");
+      }, 300);
+
+   });
+
+   // Reset animation when popup closes
+   marker.on("popupclose", function () {
+
+      elevatorDoors.classList.remove("open");
+
+   });
 }
 
 function handleError() {
