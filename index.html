@@ -19,6 +19,43 @@
    </head>
    <body>
       <div id="map"></div>
+
+      <div class="filter-container">
+         <button
+            id="toggle-icon"
+            type="button"
+            aria-label="Toggle filters"
+            aria-controls="dropdown-content"
+            aria-expanded="false">
+            <img src="images/bars.svg" alt="" />
+         </button>
+
+         <div id="dropdown-content" class="dropdown">
+            <form id="filter-form">
+               <input type="radio" id="has_elevator" name="accessible" value="1" />
+               <label for="has_elevator">Elevator</label>
+               <br />
+               <input type="radio" id="no_elevator" name="accessible" value="0" />
+               <label for="no_elevator">No Elevator</label>
+               <br />
+               <label>
+                  <input type="checkbox" id="use-outages-filter" />
+                  Apply Outage Limit
+               </label>
+               <label for="outages">Total Outages in 2025:</label>
+               <input
+                  type="range"
+                  id="outages"
+                  name="outages"
+                  min="0"
+                  max="50"
+                  value="0" />
+               <output id="outages-value" for="outages">0</output>
+               <br />
+               <input type="submit" value="Submit" />
+            </form>
+         </div>
+      </div>
       <script src="script.js"></script>
    </body>
 </html>

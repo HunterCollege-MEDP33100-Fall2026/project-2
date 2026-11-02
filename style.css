@@ -1,3 +1,7 @@
+* {
+   font-family: Arial, sans-serif;
+   color: #333333;
+}
 #map {
    height: 180vh;
 }
@@ -5,8 +9,6 @@
 /* Main popup box */
 .station-popup {
    width: 250px;
-   font-family: Arial, sans-serif;
-   color: #333333;
 }
 
 /* Station name */
@@ -44,4 +46,49 @@
 .station-popup .no-data {
    font-size: 13px;
    color: #777777;
+}
+
+/*  */
+/* filter */
+/*  */
+.filter-container {
+   position: fixed;
+   top: 16px;
+   right: 16px;
+   z-index: 1000;
+}
+
+.dropdown {
+   display: none;
+   position: absolute;
+   top: 56px;
+   right: 0;
+   min-width: 200px;
+   padding: 16px;
+   background-color: white;
+   border-radius: 8px;
+   box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+   z-index: 1001;
+}
+
+#dropdown-content.show {
+   display: block;
+}
+
+#toggle-icon {
+   display: block;
+   width: 52px;
+   height: 52px;
+   padding: 2px;
+   background-color: white;
+   border: 0;
+   border-radius: 15px;
+   box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+   cursor: pointer;
+}
+
+#toggle-icon img {
+   display: block;
+   width: 100%;
+   height: 100%;
 }
