@@ -45,3 +45,56 @@
    font-size: 13px;
    color: #777777;
 }
+
+/* Elevator doors container */
+.elevator-doors {
+   width: 100%;
+   height: 120px;
+   display: flex;
+   overflow: hidden;
+   position: relative;
+   background-color: #333333;
+   border: 3px solid #650d1b;
+   border-radius: 8px;
+}
+
+/* Both elevator doors */
+.left-door,
+.right-door {
+   width: 50%;
+   height: 100%;
+   background: linear-gradient(to right, #b8b8b8, #eeeeee, #999999);
+   transition: transform 1.2s ease-in-out;
+}
+
+/* Left door slides left */
+.left-door {
+   border-right: 2px solid #777777;
+}
+
+/* Right door slides right */
+.right-door {
+   border-left: 2px solid #777777;
+}
+
+/* Opening animation */
+.elevator-doors.open .left-door {
+   transform: translateX(-100%);
+}
+
+.elevator-doors.open .right-door {
+   transform: translateX(100%);
+}
+
+/* Station information */
+.station-info {
+   opacity: 0;
+   transition: opacity 0.6s ease;
+   padding-top: 10px;
+}
+
+/* Show information after doors open */
+.elevator-doors.open+.station-info {
+   opacity: 1;
+   transition-delay: 0.9s;
+}
