@@ -1,4 +1,5 @@
-var map = L.map("map").setView([40.73061, -73.935242], 13);
+var map = L.map("map").setView([40.735114, -73.994336], 13);
+map.setMaxZoom(20);
 
 var elevatorIcon = L.icon({
    iconUrl: "./images/elevator.svg",
@@ -99,7 +100,6 @@ function createMarker(station) {
       noData.classList.add("no-data");
       noData.textContent = "No matching elevator records found.";
       stationInfo.appendChild(noData);
-
    }
    // Add station information to popup
    popupContent.appendChild(stationInfo);
@@ -108,7 +108,6 @@ function createMarker(station) {
 
    // Start animation when popup opens
    marker.on("popupopen", function () {
-
       // Reset doors to closed position
       elevatorDoors.classList.remove("open");
 
@@ -116,14 +115,11 @@ function createMarker(station) {
       setTimeout(function () {
          elevatorDoors.classList.add("open");
       }, 300);
-
    });
 
    // Reset animation when popup closes
    marker.on("popupclose", function () {
-
       elevatorDoors.classList.remove("open");
-
    });
 }
 
