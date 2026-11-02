@@ -1,5 +1,18 @@
 var map = L.map("map").setView([40.73061, -73.935242], 13);
 
+var elevatorIcon = L.icon({
+   iconUrl: "./images/elevator.svg",
+   iconSize: [48, 48],
+});
+
+var stairsIcon = L.icon({
+   iconUrl: "./images/stairs.svg",
+   iconSize: [48, 48],
+});
+
+const markerLayer = L.layerGroup().addTo(map);
+let allStations = [];
+
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
    minZoom: 13,
    maxZoom: 70,
@@ -16,8 +29,10 @@ function createMarker(station) {
       return;
    }
 
-   // Create the marker
-   const marker = L.marker([lat, long]).addTo(map);
+   // Create the marker based on if station is accessible
+   const icon = station.ada === "1" || station.ada === "2" ? elevatorIcon : stairsIcon;
+   const marker = L.marker([lat, long], { icon });
+   markerLayer.addLayer(marker);
 
    // Create popup content
    const popupContent = document.createElement("div");
@@ -53,7 +68,6 @@ function createMarker(station) {
 
    // Check if the station has elevator records
    if (station.elevatorData.length > 0) {
-
       const elevatorTitle = document.createElement("p");
       elevatorTitle.classList.add("elevator-title");
       elevatorTitle.textContent = "Elevator Information";
@@ -61,21 +75,26 @@ function createMarker(station) {
 
       // Display each elevator record
       for (const elevator of station.elevatorData) {
-
          const elevatorInfo = document.createElement("div");
          elevatorInfo.classList.add("elevator-info");
 
          elevatorInfo.innerHTML =
-            "<p>Month: " + elevator.month + "</p>" +
-            "<p>AM Availability: " + elevator.am_peak_availability + "</p>" +
-            "<p>PM Availability: " + elevator.pm_peak_availability + "</p>" +
-            "<p>Total Outages: " + elevator.total_outages + "</p>";
+            "<p>Month: " +
+            elevator.month +
+            "</p>" +
+            "<p>AM Availability: " +
+            elevator.am_peak_availability +
+            "</p>" +
+            "<p>PM Availability: " +
+            elevator.pm_peak_availability +
+            "</p>" +
+            "<p>Total Outages: " +
+            elevator.total_outages +
+            "</p>";
 
          stationInfo.appendChild(elevatorInfo);
       }
-
    } else {
-
       const noData = document.createElement("p");
       noData.classList.add("no-data");
       noData.textContent = "No matching elevator records found.";
@@ -107,7 +126,6 @@ function createMarker(station) {
 
    });
 }
-
 
 function handleError() {
    // check if error modal already exist
@@ -166,6 +184,7 @@ function connectAPIs(stations, elevator) {
 }
 
 function displayMarker(stations) {
+   markerLayer.clearLayers();
    for (const station of stations) {
       createMarker(station);
    }
@@ -179,13 +198,62 @@ async function loadStation() {
          getelevatorData(),
       ]);
 
-      const connectedStations = connectAPIs(stations, elevator);
-      // console.log(connectedStations);
-      displayMarker(connectedStations);
+      allStations = connectAPIs(stations, elevator);
+      displayMarker(allStations);
    } catch (error) {
       console.error(error);
       handleError();
    }
 }
 
+function filterDropdown() {
+   const toggleIcon = document.getElementById("toggle-icon");
+   const dropdownContent = document.getElementById("dropdown-content");
+   const filterContainer = document.querySelector(".filter-container");
+
+   toggleIcon.addEventListener("click", () => {
+      const isOpen = dropdownContent.classList.toggle("show");
+      toggleIcon.setAttribute("aria-expanded", String(isOpen));
+   });
+
+   document.addEventListener("click", (e) => {
+      if (!filterContainer.contains(e.target)) {
+         dropdownContent.classList.remove("show");
+         toggleIcon.setAttribute("aria-expanded", "false");
+      }
+   });
+}
+
+// show slider value
+const outagesSlider = document.getElementById("outages");
+const outagesValue = document.getElementById("outages-value");
+outagesSlider.addEventListener("input", () => {
+   outagesValue.value = outagesSlider.value;
+});
+
+// handle form submission
+document.getElementById("filter-form").addEventListener("submit", (e) => {
+   e.preventDefault();
+
+   const selectedAda = new FormData(e.currentTarget).get("accessible");
+   const useOutageLimit = document.getElementById("use-outages-filter").checked;
+   const maxOutages = Number(document.getElementById("outages").value);
+
+   const filteredStations = allStations.filter((station) => {
+      const matchesAccessibility = !selectedAda || station.ada === selectedAda;
+
+      // adding up total outages for a station
+      const totalOutages = station.elevatorData.reduce(
+         (total, record) => total + Number(record.total_outages || 0),
+         0,
+      );
+      const matchesOutages =
+         !useOutageLimit ||
+         (station.elevatorData.length > 0 && totalOutages <= maxOutages);
+      return matchesAccessibility && matchesOutages;
+   });
+   displayMarker(filteredStations);
+});
+
+filterDropdown();
 loadStation();
