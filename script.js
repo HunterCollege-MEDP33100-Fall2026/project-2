@@ -31,7 +31,8 @@ function createMarker(station) {
    }
 
    // Create the marker based on if station is accessible
-   const icon = station.ada === "1" || station.ada === "2" ? elevatorIcon : stairsIcon;
+   const hasElevator = station.elevatorData.length > 0;
+   const icon = hasElevator ? elevatorIcon : stairsIcon;
    const marker = L.marker([lat, long], { icon });
    markerLayer.addLayer(marker);
 
@@ -173,6 +174,7 @@ function connectAPIs(stations, elevator) {
       }
       elevatorInfo.get(complexID).push(info);
    }
+
    return stations.map((station) => ({
       ...station,
       elevatorData: elevatorInfo.get(String(station.complex_id ?? "").trim()) || [],
@@ -227,16 +229,20 @@ outagesSlider.addEventListener("input", () => {
    outagesValue.value = outagesSlider.value;
 });
 
+const filterForm = document.getElementById("filter-form");
+
 // handle form submission
-document.getElementById("filter-form").addEventListener("submit", (e) => {
+filterForm.addEventListener("submit", (e) => {
    e.preventDefault();
 
-   const selectedAda = new FormData(e.currentTarget).get("accessible");
+   const selectedElevator = new FormData(e.currentTarget).get("accessible");
    const useOutageLimit = document.getElementById("use-outages-filter").checked;
    const maxOutages = Number(document.getElementById("outages").value);
 
    const filteredStations = allStations.filter((station) => {
-      const matchesAccessibility = !selectedAda || station.ada === selectedAda;
+      const hasElevator = station.elevatorData.length > 0;
+      const matchesElevator =
+         !selectedElevator || hasElevator === (selectedElevator === "1");
 
       // adding up total outages for a station
       const totalOutages = station.elevatorData.reduce(
@@ -246,10 +252,17 @@ document.getElementById("filter-form").addEventListener("submit", (e) => {
       const matchesOutages =
          !useOutageLimit ||
          (station.elevatorData.length > 0 && totalOutages <= maxOutages);
-      return matchesAccessibility && matchesOutages;
+      return matchesElevator && matchesOutages;
    });
+   filterForm.reset();
+   outagesValue.value = outagesSlider.value;
    displayMarker(filteredStations);
 });
 
+filterForm.addEventListener("reset", () => {
+   displayMarker(allStations);
+   document.getElementById("outages-value").value =
+      document.getElementById("outages").value;
+});
 filterDropdown();
 loadStation();
