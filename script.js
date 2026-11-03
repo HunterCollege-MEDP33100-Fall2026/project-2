@@ -2,13 +2,13 @@ var map = L.map("map").setView([40.735114, -73.994336], 13);
 map.setMaxZoom(20);
 
 var elevatorIcon = L.icon({
-   iconUrl: "./images/elevator.svg",
-   iconSize: [48, 48],
+   iconUrl: "./images/Elevator.png",
+   iconSize: [80, 80],
 });
 
 var stairsIcon = L.icon({
-   iconUrl: "./images/stairs.svg",
-   iconSize: [48, 48],
+   iconUrl: "./images/Stairs.png",
+   iconSize: [80, 80],
 });
 
 const markerLayer = L.layerGroup().addTo(map);
