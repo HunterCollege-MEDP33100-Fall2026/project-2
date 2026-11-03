@@ -62,6 +62,12 @@
    z-index: 1000;
 }
 
+h3 {
+   margin: 0;
+   padding: 0;
+   font-weight: bold;
+}
+
 .dropdown {
    display: none;
    position: absolute;
@@ -77,6 +83,29 @@
 
 #dropdown-content.show {
    display: block;
+}
+
+.elevator-radio,
+.outage-slider,
+h3 {
+   margin: 0 0 12px;
+   padding-bottom: 8px;
+   border-bottom: 2px solid #650d1b;
+   color: #650d1b;
+}
+
+.form-button {
+   display: flex;
+   gap: 20px;
+   justify-content: center;
+}
+
+.form-button input {
+   background-color: #f2b8c2;
+   border: none;
+   border-radius: 15px;
+   padding: 10px;
+   font-weight: bold;
 }
 
 #toggle-icon {

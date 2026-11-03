@@ -30,27 +30,34 @@
 
          <div id="dropdown-content" class="dropdown">
             <form id="filter-form">
-               <input type="radio" id="has_elevator" name="accessible" value="1" />
-               <label for="has_elevator">Elevator</label>
-               <br />
-               <input type="radio" id="no_elevator" name="accessible" value="0" />
-               <label for="no_elevator">No Elevator</label>
-               <br />
-               <label>
-                  <input type="checkbox" id="use-outages-filter" />
-                  Apply Outage Limit
-               </label>
-               <label for="outages">Total Outages in 2025:</label>
-               <input
-                  type="range"
-                  id="outages"
-                  name="outages"
-                  min="0"
-                  max="50"
-                  value="0" />
-               <output id="outages-value" for="outages">0</output>
-               <br />
-               <input type="submit" value="Submit" />
+               <h3>Filter</h3>
+               <div class="elevator-radio">
+                  <input type="radio" id="has_elevator" name="accessible" value="1" />
+                  <label for="has_elevator">Elevator</label>
+                  <br />
+                  <input type="radio" id="no_elevator" name="accessible" value="0" />
+                  <label for="no_elevator">No Elevator</label>
+               </div>
+               <div class="outage-slider">
+                  <label>
+                     <input type="checkbox" id="use-outages-filter" />
+                     Apply Outage Limit
+                  </label>
+                  <br />
+                  <label for="outages">Total Outages in 2025:</label>
+                  <input
+                     type="range"
+                     id="outages"
+                     name="outages"
+                     min="0"
+                     max="100"
+                     value="0" />
+                  <output id="outages-value" for="outages">0</output>
+               </div>
+               <div class="form-button">
+                  <input type="submit" value="Submit" />
+                  <input type="reset" value="Clear" />
+               </div>
             </form>
          </div>
       </div>
