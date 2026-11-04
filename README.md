@@ -9,7 +9,9 @@ Add all the names of all the team members
 
 ## Live Demo
 
-- Include a link to the live version of the project hosted on Render.
+Include a link to the live version of the project hosted on Render.
+
+https://jiyuua.github.io/project-2/
 
 ## Project Overview
 
