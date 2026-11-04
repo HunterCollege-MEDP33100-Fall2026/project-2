@@ -14,6 +14,7 @@ Add all the names of all the team members
 ## Project Overview
 
 Briefly describe the purpose of the project. Explain what live data set was used, and what you hope users would learn about the data set by using your project
+
 The purpose of the project is explore subway accessibility through its elevators using map visualization and interactions. We utilized two live data sets, MTA stations and train elevator availabilities, which are filtered to contain data for Manhattan stations in 2025. We hope that through this project, users can think more about accessibility in our daily lives such as our daily commutes. Users can learn through our project like which train stations are accessible by elevators, what areas have more elevators, and which stations experiences the most elevator outages.
 
 ## Features
