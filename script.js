@@ -62,6 +62,7 @@ function createMarker(station) {
 
    // Add elevator doors to popup
    popupContent.appendChild(elevatorDoors);
+
    // Station name
    const stationName = document.createElement("h3");
    stationName.classList.add("station-name");
@@ -70,40 +71,64 @@ function createMarker(station) {
 
    // Check if the station has elevator records
    if (station.elevatorData.length > 0) {
+
       const elevatorTitle = document.createElement("p");
       elevatorTitle.classList.add("elevator-title");
       elevatorTitle.textContent = "Elevator Information";
       stationInfo.appendChild(elevatorTitle);
 
-      // Display each elevator record
+      // Display each month
       for (const elevator of station.elevatorData) {
+
          const elevatorInfo = document.createElement("div");
          elevatorInfo.classList.add("elevator-info");
 
-         elevatorInfo.innerHTML =
-            "<p>Month: " +
-            elevator.month +
-            "</p>" +
-            "<p>AM Availability: " +
-            elevator.am_peak_availability +
-            "</p>" +
-            "<p>PM Availability: " +
-            elevator.pm_peak_availability +
-            "</p>" +
-            "<p>Total Outages: " +
-            elevator.total_outages +
-            "</p>";
+         // Format month
+         const monthDate = new Date(elevator.month);
+         const monthName = monthDate.toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric",
+         });
+
+         // Month heading
+         const monthTitle = document.createElement("h4");
+         monthTitle.textContent = monthName;
+         elevatorInfo.appendChild(monthTitle);
+
+         // AM availability
+         const amAvailability = document.createElement("p");
+         amAvailability.innerHTML =
+            "<strong>AM Availability:</strong> " +
+            elevator.am_peak_availability + "%";
+         elevatorInfo.appendChild(amAvailability);
+
+         // PM availability
+         const pmAvailability = document.createElement("p");
+         pmAvailability.innerHTML =
+            "<strong>PM Availability:</strong> " +
+            elevator.pm_peak_availability + "%";
+         elevatorInfo.appendChild(pmAvailability);
+
+         // Total outages
+         const totalOutages = document.createElement("p");
+         totalOutages.innerHTML =
+            "<strong>Total Outages:</strong> " +
+            elevator.total_outages;
+         elevatorInfo.appendChild(totalOutages);
 
          stationInfo.appendChild(elevatorInfo);
       }
+
    } else {
       const noData = document.createElement("p");
       noData.classList.add("no-data");
       noData.textContent = "No matching elevator records found.";
       stationInfo.appendChild(noData);
    }
+
    // Add station information to popup
    popupContent.appendChild(stationInfo);
+
    // Attach popup to marker
    marker.bindPopup(popupContent);
 

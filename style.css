@@ -242,3 +242,27 @@ h3 {
    height: 80px;
    object-fit: contain;
 }
+
+/* Individual monthly information cards popip*/
+.station-popup .elevator-info {
+   background-color: #f5f0f0;
+   padding: 10px;
+   margin-bottom: 10px;
+   border-radius: 8px;
+}
+
+/* Month heading */
+.station-popup .elevator-info h4 {
+   color: #650d1b;
+   font-size: 14px;
+   margin: 0 0 8px;
+   padding-bottom: 5px;
+   border-bottom: 1px solid #d8bfc3;
+}
+
+/* Information inside each card */
+.station-popup .elevator-info p {
+   font-size: 12px;
+   margin: 5px 0;
+   line-height: 1.4;
+}
