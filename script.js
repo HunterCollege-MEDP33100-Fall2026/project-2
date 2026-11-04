@@ -130,19 +130,19 @@ function createMarker(station) {
             const amAvailability = document.createElement("p");
             amAvailability.innerHTML = elevator.am_peak_availability
                ? (amAvailability.innerHTML =
-                    "<strong>AM Availability:</strong> " +
-                    Math.round(elevator.am_peak_availability * 100) +
-                    "%")
+                  "<strong>AM Availability:</strong> " +
+                  Math.round(elevator.am_peak_availability * 100) +
+                  "%")
                : (amAvailability.innerHTML =
-                    "<strong>AM Availability:</strong> No data found");
+                  "<strong>AM Availability:</strong> No data found");
             elevatorInfo.appendChild(amAvailability);
 
             // PM availability
             const pmAvailability = document.createElement("p");
             pmAvailability.innerHTML = elevator.pm_peak_availability
                ? "<strong>PM Availability:</strong> " +
-                 Math.round(elevator.pm_peak_availability * 100) +
-                 "%"
+               Math.round(elevator.pm_peak_availability * 100) +
+               "%"
                : "<strong>PM Availability:</strong> No data found";
 
             elevatorInfo.appendChild(pmAvailability);
@@ -291,6 +291,7 @@ function rankingDropdown() {
    const toggleRanking = document.getElementById("toggle-ranking");
    const rankingContent = document.getElementById("ranking-content");
    const filterContainer = document.querySelector(".filter-container");
+   const rankingList = document.getElementById("ranking-list");
 
    toggleRanking.addEventListener("click", () => {
       const isOpen = rankingContent.classList.toggle("show");
@@ -309,6 +310,9 @@ function rankingDropdown() {
 
       // console.table(highestOutages);
 
+      // clear previous ranking to prevent duplicates
+      rankingList.innerHTML = "";
+
       const rankedList = document.createElement("ol");
       const rankedStationInfo = document.createElement("div");
       rankedStationInfo.classList.add("ranked-station-info");
@@ -316,18 +320,18 @@ function rankingDropdown() {
       for (const topStation of highestOutages) {
          const stationName = document.createElement("li");
 
-         stationName.innerHTML = "<strong>Station: <stong/>" + topStation.name;
+         stationName.innerHTML = "Station: <strong>" + topStation.name + "</strong>";
          rankedStationInfo.appendChild(stationName);
 
          const outageAmount = document.createElement("p");
          outageAmount.classList.add("outage-ranking-info");
          outageAmount.innerHTML =
-            "<strong>Total Outages: <stong/>" + topStation.totalOutages;
+            "Total Outages: <strong>" + topStation.totalOutages + "</strong>";
 
          rankedStationInfo.appendChild(outageAmount);
-         rankedList.appendChild(rankedStationInfo);
-         rankingContent.appendChild(rankedList);
       }
+      rankedList.appendChild(rankedStationInfo);
+      rankingList.appendChild(rankedList);
    });
 
    document.addEventListener("click", (e) => {
