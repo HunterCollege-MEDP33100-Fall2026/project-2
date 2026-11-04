@@ -14,6 +14,13 @@ var stairsIcon = L.icon({
 const markerLayer = L.layerGroup().addTo(map);
 let allStations = [];
 
+function getTotalOutages(station) {
+   return station.elevatorData.reduce(
+      (total, record) => total + Number(record.total_outages || 0),
+      0,
+   );
+}
+
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
    minZoom: 13,
    maxZoom: 70,
@@ -71,15 +78,25 @@ function createMarker(station) {
 
    // Check if the station has elevator records
    if (station.elevatorData.length > 0) {
+      const elevatorInfoDiv = document.createElement("div");
+      elevatorInfoDiv.classList.add("elevator-info-div");
 
       const elevatorTitle = document.createElement("p");
       elevatorTitle.classList.add("elevator-title");
       elevatorTitle.textContent = "Elevator Information";
-      stationInfo.appendChild(elevatorTitle);
+      elevatorInfoDiv.appendChild(elevatorTitle);
+
+      const totalOutages = getTotalOutages(station);
+      const stationOutages = document.createElement("p");
+      stationOutages.classList.add("total-outages");
+      stationOutages.innerHTML =
+         "<strong>Total Outages in 2025:</strong> " + String(totalOutages);
+      elevatorInfoDiv.appendChild(stationOutages);
+
+      stationInfo.appendChild(elevatorInfoDiv);
 
       // Display each month
       for (const elevator of station.elevatorData) {
-
          const elevatorInfo = document.createElement("div");
          elevatorInfo.classList.add("elevator-info");
 
@@ -97,28 +114,33 @@ function createMarker(station) {
 
          // AM availability
          const amAvailability = document.createElement("p");
-         amAvailability.innerHTML =
-            "<strong>AM Availability:</strong> " +
-            elevator.am_peak_availability + "%";
+         amAvailability.innerHTML = elevator.am_peak_availability
+            ? (amAvailability.innerHTML =
+                 "<strong>AM Availability:</strong> " +
+                 Math.round(elevator.am_peak_availability * 100) / 100 +
+                 "%")
+            : (amAvailability.innerHTML =
+                 "<strong>AM Availability:</strong> No data found");
          elevatorInfo.appendChild(amAvailability);
 
          // PM availability
          const pmAvailability = document.createElement("p");
-         pmAvailability.innerHTML =
-            "<strong>PM Availability:</strong> " +
-            elevator.pm_peak_availability + "%";
+         pmAvailability.innerHTML = elevator.pm_peak_availability
+            ? "<strong>PM Availability:</strong> " +
+              Math.round(elevator.pm_peak_availability * 100) / 100 +
+              "%"
+            : "<strong>PM Availability:</strong> No data found";
+
          elevatorInfo.appendChild(pmAvailability);
 
          // Total outages
          const totalOutages = document.createElement("p");
          totalOutages.innerHTML =
-            "<strong>Total Outages:</strong> " +
-            elevator.total_outages;
+            "<strong>Monthly Outages:</strong> " + elevator.total_outages;
          elevatorInfo.appendChild(totalOutages);
 
          stationInfo.appendChild(elevatorInfo);
       }
-
    } else {
       const noData = document.createElement("p");
       noData.classList.add("no-data");
@@ -177,7 +199,7 @@ async function getstationData() {
 // elevator API
 async function getelevatorData() {
    const response = await fetch(
-      "https://data.ny.gov/resource/rc78-7x78.json?$query=SELECT%0A%20%20%60month%60%2C%0A%20%20%60borough%60%2C%0A%20%20%60equipment_type%60%2C%0A%20%20%60total_outages%60%2C%0A%20%20%60pm_peak_availability%60%2C%0A%20%20%60station_name%60%2C%0A%20%20%60station_complex_name%60%2C%0A%20%20%60station_complex_mrn%60%2C%0A%20%20%60am_peak_availability%60%0AWHERE%0A%20%20caseless_one_of(%60borough%60%2C%20%22Manhattan%22)%0A%20%20AND%20%60month%60%0A%20%20%20%20%20%20%20%20BETWEEN%20%222025-01-01T13%3A48%3A41%22%20%3A%3A%20floating_timestamp%0A%20%20%20%20%20%20%20%20AND%20%222025-12-31T13%3A48%3A41%22%20%3A%3A%20floating_timestamp%0A%20%20AND%20caseless_one_of(%60equipment_type%60%2C%20%22Elevator%22)%0AORDER%20BY%20%60month%60%20ASC%20NULL%20LAST",
+      "https://data.ny.gov/resource/rc78-7x78.json?$query=SELECT%0A%20%20%60month%60%2C%0A%20%20%60borough%60%2C%0A%20%20%60equipment_type%60%2C%0A%20%20%60total_outages%60%2C%0A%20%20%60pm_peak_availability%60%2C%0A%20%20%60station_name%60%2C%0A%20%20%60station_complex_name%60%2C%0A%20%20%60station_complex_mrn%60%2C%0A%20%20%60am_peak_availability%60%0AWHERE%0A%20%20caseless_one_of(%60borough%60%2C%20%22Manhattan%22)%0A%20%20AND%20%60month%60%0A%20%20%20%20%20%20%20%20BETWEEN%20%222025-01-01T13%3A48%3A41%22%20%3A%3A%20floating_timestamp%0A%20%20%20%20%20%20%20%20AND%20%222025-12-31T13%3A48%3A41%22%20%3A%3A%20floating_timestamp%0A%20%20AND%20caseless_one_of(%60equipment_type%60%2C%20%22Elevator%22)%0AORDER%20BY%20%60month%60%20ASC%20NULL%20LAST%0ALIMIT%2050000",
    );
    if (!response.ok) {
       throw new Error(`Elevator API request failed: ${response.status}`);
@@ -262,32 +284,28 @@ filterForm.addEventListener("submit", (e) => {
 
    const selectedElevator = new FormData(e.currentTarget).get("accessible");
    const useOutageLimit = document.getElementById("use-outages-filter").checked;
-   const maxOutages = Number(document.getElementById("outages").value);
+   const selectedOutage = Number(document.getElementById("outages").value);
 
    const filteredStations = allStations.filter((station) => {
       const hasElevator = station.elevatorData.length > 0;
       const matchesElevator =
          !selectedElevator || hasElevator === (selectedElevator === "1");
 
-      // adding up total outages for a station
-      const totalOutages = station.elevatorData.reduce(
-         (total, record) => total + Number(record.total_outages || 0),
-         0,
-      );
+      const totalOutages = getTotalOutages(station);
+
       const matchesOutages =
          !useOutageLimit ||
-         (station.elevatorData.length > 0 && totalOutages <= maxOutages);
+         (station.elevatorData.length > 0 && totalOutages === selectedOutage);
       return matchesElevator && matchesOutages;
    });
-   filterForm.reset();
-   outagesValue.value = outagesSlider.value;
    displayMarker(filteredStations);
 });
 
 filterForm.addEventListener("reset", () => {
    displayMarker(allStations);
-   document.getElementById("outages-value").value =
-      document.getElementById("outages").value;
+   setTimeout(() => {
+      outagesValue.value = outagesSlider.value;
+   }, 0);
 });
 filterDropdown();
 loadStation();
