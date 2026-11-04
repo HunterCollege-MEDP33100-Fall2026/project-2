@@ -25,14 +25,25 @@
       </header>
 
       <div class="filter-container">
-         <button
-            id="toggle-icon"
-            type="button"
-            aria-label="Toggle filters"
-            aria-controls="dropdown-content"
-            aria-expanded="false">
-            <img src="images/bars.svg" alt="" />
-         </button>
+         <div class="button-container">
+            <button
+               id="toggle-dropdown"
+               type="button"
+               aria-label="Toggle filters"
+               aria-controls="dropdown-content"
+               aria-expanded="false">
+               <img src="images/bars.svg" alt="clickable icon for filter" />
+            </button>
+
+            <button
+               id="toggle-ranking"
+               type="button"
+               aria-label="Toggle ranking"
+               aria-controls="ranking-content"
+               aria-expanded="false">
+               <img src="images/ranking.svg" alt="clickable icon for ranking" />
+            </button>
+         </div>
 
          <div id="dropdown-content" class="dropdown">
             <form id="filter-form">
@@ -44,7 +55,7 @@
                   <input type="radio" id="no_elevator" name="accessible" value="0" />
                   <label for="no_elevator">No Elevator</label>
                </div>
-               <div class="outage-slider">
+               <!-- <div class="outage-slider">
                   <label>
                      <input type="checkbox" id="use-outages-filter" />
                      Apply Outage Limit
@@ -59,12 +70,15 @@
                      max="100"
                      value="0" />
                   <output id="outages-value" for="outages">0</output>
-               </div>
+               </div> -->
                <div class="form-button">
                   <input type="submit" value="Submit" />
                   <input type="reset" value="Clear" />
                </div>
             </form>
+         </div>
+         <div id="ranking-content" class="ranking">
+            <h3>Is your elevator safe from outages?</h3>
          </div>
       </div>
 
