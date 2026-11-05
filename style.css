@@ -1,18 +1,18 @@
-* {
-   font-family: Arial, sans-serif;
-   color: #333333;
-}
-
+/* Sets the map to fill the full screen height */
 #map {
    height: 100vh;
 }
+
+/*  */
+/* Popup content */
+/*  */
 
 /* Main popup box */
 .station-popup {
    width: 250px;
 }
 
-/* Station name */
+/* Styles the subway station name inside the popup */
 .station-popup .station-name {
    font-size: 18px;
    margin: 0 0 12px;
@@ -21,14 +21,14 @@
    color: #650d1b;
 }
 
-/* Elevator information heading */
+/* Styles the elevator information heading */
 .station-popup .elevator-title {
    font-size: 14px;
    font-weight: bold;
    margin-bottom: 8px;
 }
 
-/* Individual elevator records */
+/* Styles each individual elevator information card */
 .station-popup .elevator-info {
    background-color: #f5f0f0;
    padding: 8px;
@@ -36,27 +36,30 @@
    border-radius: 6px;
 }
 
-/* Information inside each record */
+/* Controls the text size, spacing and line height inside each card */
 .station-popup .elevator-info p {
    font-size: 12px;
    margin: 4px 0;
    line-height: 1.4;
 }
 
+/* Makes the station information scrollable when there is too much content */
 .station-info {
    overflow-y: scroll;
    max-height: 200px;
 }
 
-/* No elevator data message */
+/* Styles the message displayed when there is no elevator data */
 .station-popup .no-data {
    font-size: 13px;
    color: #777777;
 }
 
 /*  */
-/* filter */
+/* filter and ranking section */
 /*  */
+
+/* Positions the filter and ranking buttons in the top-right corner */
 .filter-container {
    position: fixed;
    top: 16px;
@@ -64,12 +67,14 @@
    z-index: 1000;
 }
 
+/* Removes the default heading spacing and makes the text bold */
 h3 {
    margin: 0;
    padding: 0;
    font-weight: bold;
 }
 
+/* Styles the filter dropdown menu */
 .dropdown {
    display: none;
    position: absolute;
@@ -83,14 +88,17 @@ h3 {
    z-index: 1001;
 }
 
+/* Displays the filter dropdown when it has the show class */
 #dropdown-content.show {
    display: block;
 }
 
+/* Centers the ranking heading */
 .ranking h3 {
    text-align: center;
 }
 
+/* Styles the ranking popup and positions it in the center of the screen */
 #ranking-content {
    display: none;
    position: fixed;
@@ -108,15 +116,18 @@ h3 {
    overflow-y: auto;
 }
 
+/* Displays the ranking popup when it has the show class */
 #ranking-content.show {
    display: block;
 }
 
+/* Adds spacing and a divider between ranked station information */
 .outage-ranking-info {
    padding-bottom: 5px;
    border-bottom: 1px solid #d8bfc3;
 }
 
+/* Styles the filter headings and adds a burgundy divider underneath */
 .elevator-radio,
 .outage-slider,
 h3 {
@@ -126,12 +137,14 @@ h3 {
    color: #650d1b;
 }
 
+/* Arranges the Submit and Clear buttons next to each other */
 .form-button {
    display: flex;
    gap: 20px;
    justify-content: center;
 }
 
+/* Styles the Submit and Clear buttons */
 .form-button input {
    background-color: #f2b8c2;
    border: none;
@@ -140,12 +153,14 @@ h3 {
    font-weight: bold;
 }
 
+/* Arranges the filter and ranking buttons vertically */
 .button-container {
    display: flex;
    flex-direction: column;
    gap: 15px;
 }
 
+/* Styles both the filter and ranking icon buttons */
 #toggle-dropdown,
 #toggle-ranking {
    display: block;
@@ -159,6 +174,7 @@ h3 {
    cursor: pointer;
 }
 
+/* Makes the icons fill their button containers */
 #toggle-dropdown img,
 #toggle-ranking img {
    display: block;
@@ -166,7 +182,11 @@ h3 {
    height: 100%;
 }
 
+/*  */
 /* Elevator doors container */
+/*  */
+
+/* Main container for the two elevator doors */
 .elevator-doors {
    width: 100%;
    height: 120px;
@@ -178,7 +198,7 @@ h3 {
    border-radius: 8px;
 }
 
-/* Both elevator doors */
+/* Styles both elevator doors and controls their opening animation */
 .left-door,
 .right-door {
    width: 50%;
@@ -197,29 +217,34 @@ h3 {
    border-left: 2px solid #777777;
 }
 
-/* Opening animation */
+/* Moves the left door to the left when the elevator opens */
 .elevator-doors.open .left-door {
    transform: translateX(-100%);
 }
 
+/* Moves the right door to the left when the elevator opens */
 .elevator-doors.open .right-door {
    transform: translateX(100%);
 }
 
-/* Station information */
+/* Hides the station information before the elevator doors open */
 .station-info {
    opacity: 0;
    transition: opacity 0.6s ease;
    padding-top: 10px;
 }
 
-/* Show information after doors open */
-.elevator-doors.open + .station-info {
+/* Makes the station information visible after the doors open */
+.elevator-doors.open+.station-info {
    opacity: 1;
    transition-delay: 0.9s;
 }
 
+/*  */
 /* Website title */
+/*  */
+
+/* Positions the project title at the top center of the map */
 .site-title {
    position: fixed;
    top: 16px;
@@ -234,19 +259,25 @@ h3 {
    width: max-content;
 }
 
+/* Styles the main project title */
 .site-title h1 {
    margin: 0;
    font-size: 22px;
    color: #650d1b;
 }
 
+/* Styles the subtitle underneath the main title */
 .site-title p {
    margin: 5px 0 0;
    font-size: 12px;
    color: #666666;
 }
 
+/*  */
 /* Map Legend */
+/*  */
+
+/* Positions the map legend in the bottom-right corner */
 .map-legend {
    position: fixed;
    bottom: 20px;
@@ -259,6 +290,7 @@ h3 {
    width: 200px;
 }
 
+/* Styles the map legend heading */
 .map-legend h3 {
    color: #650d1b;
    font-family: "Times New Roman", Times, serif;
@@ -267,6 +299,7 @@ h3 {
    border-bottom: 2px solid #650d1b;
 }
 
+/* Arranges each legend icon and its label in a row */
 .legend-item {
    display: flex;
    align-items: center;
@@ -275,11 +308,17 @@ h3 {
    font-size: 12px;
 }
 
+/* Controls the size and image fitting of the legend icons */
 .legend-item img {
    max-width: 100px;
    object-fit: cover;
 }
 
+/*  */
+/* Elevator information */
+/*  */
+
+/* Arranges elevator information vertically */
 .elevator-info-div {
    display: flex;
    flex-direction: column;
@@ -287,13 +326,14 @@ h3 {
    gap: 1px;
 }
 
+/* Removes extra spacing around the elevator headings and outage totals */
 .elevator-info-div .total-outages,
 .elevator-info-div .elevator-title {
    margin: 0;
    padding: 5px 0px;
 }
 
-/* Individual monthly information cards popip*/
+/* Styles the individual monthly information cards inside the popup */
 .station-popup .elevator-info {
    background-color: #f5f0f0;
    padding: 10px;
@@ -301,7 +341,7 @@ h3 {
    border-radius: 8px;
 }
 
-/* Month heading */
+/* Styles the month heading inside each information card */
 .station-popup .elevator-info h4 {
    color: #650d1b;
    font-size: 14px;
@@ -310,18 +350,20 @@ h3 {
    border-bottom: 1px solid #d8bfc3;
 }
 
-/* Information inside each card */
+/* Styles the information displayed inside each monthly card */
 .station-popup .elevator-info p {
    font-size: 12px;
    margin: 5px 0;
    line-height: 1.4;
 }
 
+/* Adds a divider between elevator information sections */
 .elevator-divider {
    padding-bottom: 5px;
    border-bottom: 1px solid #d8bfc3;
 }
 
+/* Changes the color of important information in the ranking */
 .ranked-station-info strong {
    color: #800020;
 }
