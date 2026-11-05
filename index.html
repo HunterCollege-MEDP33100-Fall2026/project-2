@@ -6,33 +6,43 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <title>Data Visualization Project</title>
 
+   <!-- Connects the Leaflet CSS and JavaScript library to display the interactive map -->
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+   <!-- Container where the interactive map will appear -->
    <div id="map"></div>
+
+   <!-- Main project title and subtitle -->
    <header class="site-title">
       <h1>Manhattan: Beyond the Stairs</h1>
       <p>Exploring Subway Accessibility & Elevator Availability</p>
    </header>
 
+   <!-- Filter and ranking buttons and their content -->
    <div class="filter-container">
       <div class="button-container">
+
+         <!-- Button that opens and closes the filter dropdown -->
          <button id="toggle-dropdown" type="button" aria-label="Toggle filters" aria-controls="dropdown-content"
             aria-expanded="false">
             <img src="images/bars.svg" alt="clickable icon for filter" />
          </button>
 
+         <!-- Button that opens and closes the station ranking -->
          <button id="toggle-ranking" type="button" aria-label="Toggle ranking" aria-controls="ranking-content"
             aria-expanded="false">
             <img src="images/ranking.svg" alt="clickable icon for ranking" />
          </button>
       </div>
 
+      <!-- Filter dropdown for stations with or without elevators -->
       <div id="dropdown-content" class="dropdown">
          <form id="filter-form">
             <h3>Filter</h3>
@@ -43,22 +53,8 @@
                <input type="radio" id="no_elevator" name="accessible" value="0" />
                <label for="no_elevator">No Elevator</label>
             </div>
-            <!-- <div class="outage-slider">
-                  <label>
-                     <input type="checkbox" id="use-outages-filter" />
-                     Apply Outage Limit
-                  </label>
-                  <br />
-                  <label for="outages">Total Outages in 2025:</label>
-                  <input
-                     type="range"
-                     id="outages"
-                     name="outages"
-                     min="0"
-                     max="100"
-                     value="0" />
-                  <output id="outages-value" for="outages">0</output>
-               </div> -->
+
+            <!-- Buttons to apply or clear the selected filter -->
             <div class="form-button">
                <input type="submit" value="Submit" />
                <input type="reset" value="Clear" />
@@ -66,18 +62,15 @@
          </form>
       </div>
 
+      <!-- Ranking section displaying the stations with the most elevator outages -->
       <div id="ranking-content">
          <h3>Is Your Station Safe From Outages?</h3>
          <div id="ranking-list"></div>
       </div>
 
-
-      <div id="ranking-content" class="ranking">
-         <h3>Is your elevator safe from outages?</h3>
-      </div>
    </div>
 
-   <!-- Map Legend -->
+   <!-- Map legend explaining what each marker represents -->
    <div class="map-legend">
       <h3>Map Key</h3>
 
