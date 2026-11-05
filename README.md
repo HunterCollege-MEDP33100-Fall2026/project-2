@@ -2,30 +2,22 @@
 
 ## Team members
 
-Add all the names of all the team members
-
 - Rubi Perez Guzman
 - Jin Wang
 
 ## Live Demo
 
-Include a link to the live version of the project hosted on Render.
-
 https://jiyuua.github.io/project-2/
 
 ## Project Overview
 
-Briefly describe the purpose of the project. Explain what live data set was used, and what you hope users would learn about the data set by using your project
-
-The purpose of the project is explore subway accessibility through its elevators using map visualization and interactions. We utilized two live data sets, MTA stations and train elevator availabilities, which are filtered to contain data for Manhattan stations in 2025. We hope that through this project, users can think more about accessibility in our daily lives such as our daily commutes. Users can learn through our project like which train stations are accessible by elevators, what areas have more elevators, and which stations experiences the most elevator outages.
+The purpose of this project is to explore subway accessibility through elevator availability using map visualization and interactive features. We utilized two live datasets, one for MTA subway stations and the other for train elevator availability, filtered to include Manhattan stations and elevator data from 2025. We hope that through this project, users can think more about the importance of accessibility in everyday life, especially during their daily commutes. Users can learn which train stations are accessible by elevators, which areas have more elevator access and which stations experience the most elevator outages.
 
 ## Features
 
-List all (at least 3) distinct types of user interaction, such as filtering, sorting, modifying data views, or changing the data presentation.
-
-1. Filter (accessed by clicking the top right icon with three horizontal bars) that allows users to change map view to show all stations with elevators or without
-2. Ranking modal (accessed by clicking the top right icon with a bar graph) that sorted total outages for every station with elevators and displays the top 10 highest ones
-3. Map markers correspond to every train station in Manhattan with clear indication whether it has elevators or not, popup appears when clicked with unique data pertaining to the station's elevator
+1. Filter (accessed by clicking the top right icon with three horizontal bars) that allows users to change map view to show all stations with or without elevators.
+2. Ranking modal (accessed by clicking the top right icon with a bar graph) that sorts and displays the top 10 stations with the most elevator outages.
+3. Users can interact with map markers representing each Manhattan subway station. The markers visually indicate whether a station has elevators. When clicked, an animated elevator door opens to display a popup with unique information about that station's elevator availability and outage data
 
 ## Technologies Used
 
@@ -34,19 +26,17 @@ List the technologies and tools used in the project
 - **Languages**: HTML, CSS, JavaScript
 - **Libraries**: Leaflet for map
 - **APIs**: [MTA NYCT Subway Elevator and Escalator Availability](https://data.ny.gov/d/rc78-7x78), [MTA Subway Stations](https://data.ny.gov/d/39hk-dx4f)
-- **Other**: Font Awesome for icons
+- **Other**: Canva, Font Awesome for icons
 
 ## Future Enhancements
 
 List any features you would’ve liked to add if given more time
 
-- Expanding our data, we choose for our API to fetch specific data due to time constraints so our project only focuses on the data of Manhattan stations during 2025
-- More filtering options such as by months or average outages per month, sorting specific elevators within marker popup
-- We found an elevator API from MTA with real-time data of outages during our research into what API to use. If there was more time, we would've love to showcase the most recent elevator outages as a resource for commuting users who use elevators
+- Expanding our data. We would have liked to include more data from additional subway stations and a longer time period. Due to time constraints and having one less group member, we limited our API data to Manhattan stations and the year 2025 to keep the project manageable.
+- More filtering options. We would have liked to add more filtering options, such as comparing the average number of outages per month. We also wanted to give users the ability to sort and explore specific elevators within each station's popup.
+- Including real-time elevator outage information. We found an elevator API from MTA with real-time data of outages during our research. If there was more time, we would've love to showcase the most recent elevator outages as a resource for commuting users who use elevators.
 
 ## Credits
-
-List any third-party assets used in the project (e.g., sound effects, images, fonts) and provide proper attribution. Acknowledge any resources, tutorials, or references you used to help complete the project.
 
 - [Leaflet Documentation](https://leafletjs.com/reference.html)
 - Font Awesome: [Ranking Icon](https://fontawesome.com/icons/classic/solid/ranking-star), [Bars Icon](https://fontawesome.com/icons/classic/solid/bars)
