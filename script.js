@@ -40,7 +40,6 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
 
-
 // CREATE STATION MARKERS AND POPUPS //
 
 function createMarker(station) {
@@ -159,19 +158,19 @@ function createMarker(station) {
             const amAvailability = document.createElement("p");
             amAvailability.innerHTML = elevator.am_peak_availability
                ? (amAvailability.innerHTML =
-                  "<strong>AM Availability:</strong> " +
-                  Math.round(elevator.am_peak_availability * 100) +
-                  "%")
+                    "<strong>AM Availability:</strong> " +
+                    Math.round(elevator.am_peak_availability * 100) +
+                    "%")
                : (amAvailability.innerHTML =
-                  "<strong>AM Availability:</strong> No data found");
+                    "<strong>AM Availability:</strong> No data found");
             elevatorInfo.appendChild(amAvailability);
 
             // Displays the PM availability
             const pmAvailability = document.createElement("p");
             pmAvailability.innerHTML = elevator.pm_peak_availability
                ? "<strong>PM Availability:</strong> " +
-               Math.round(elevator.pm_peak_availability * 100) +
-               "%"
+                 Math.round(elevator.pm_peak_availability * 100) +
+                 "%"
                : "<strong>PM Availability:</strong> No data found";
 
             elevatorInfo.appendChild(pmAvailability);
@@ -250,7 +249,7 @@ async function getstationData() {
    return response.json();
 }
 
-// MTA ELEVATOR API // 
+// MTA ELEVATOR API //
 async function getelevatorData() {
    const response = await fetch(
       "https://data.ny.gov/resource/rc78-7x78.json?$query=SELECT%0A%20%20%60month%60%2C%0A%20%20%60borough%60%2C%0A%20%20%60equipment_type%60%2C%0A%20%20%60total_outages%60%2C%0A%20%20%60pm_peak_availability%60%2C%0A%20%20%60station_name%60%2C%0A%20%20%60station_complex_name%60%2C%0A%20%20%60station_complex_mrn%60%2C%0A%20%20%60am_peak_availability%60%2C%0A%20%20%60equipment_code%60%0AWHERE%0A%20%20caseless_one_of(%60borough%60%2C%20%22Manhattan%22)%0A%20%20AND%20%60month%60%0A%20%20%20%20%20%20%20%20BETWEEN%20%222025-01-01T13%3A48%3A41%22%20%3A%3A%20floating_timestamp%0A%20%20%20%20%20%20%20%20AND%20%222025-12-31T13%3A48%3A41%22%20%3A%3A%20floating_timestamp%0A%20%20AND%20caseless_one_of(%60equipment_type%60%2C%20%22Elevator%22)%0AORDER%20BY%20%60month%60%20ASC%20NULL%20LAST%0ALIMIT%2050000",
@@ -316,7 +315,7 @@ async function loadStation() {
    }
 }
 
-// FILTER DROPDOWN // 
+// FILTER DROPDOWN //
 
 // Controls the opening and closing of the filter dropdown
 function filterDropdown() {
