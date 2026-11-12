@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Visualization Project</title>
+    <title>Project 2</title>
     <link rel="stylesheet" href="style.css">
 
-    <!-- Add any external javascript libraries here with a <script> tag -->
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    
+    <header>
+        <h1>New York Through Time</h1>
+    </header>
+
+    <form id="year_form">
+        <label for="birth_year">What year would you travel back to in New York City?</label>
+        <input id="birth_year" type="text" placeholder="Enter year" pattern="[0-9]{4}" maxlength="4" required>
+        <button type="submit">Take me there!</button>
+    </form>
+
+    <p id="photo_caption"></p>
+    <img id="photo" alt="" hidden>
+
     <script src="script.js"></script>
 </body>
+
 </html>
